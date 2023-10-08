@@ -24,3 +24,13 @@ In order to control and rip Spotify's audio, the client has to be registered wit
 In order to split and tag the recording, the information about play/pause/skip events that are sent to the GNOME sound indicator are read.
 
 If any other application sends play/pause/skip events to the sound indicator, the ripper's audio splicing and tagging messes up.
+
+
+## Manjaro
+
+I had to install `pacman -S vorbis-tools`.
+
+## Convert to mp3:
+`source .mp3_converter_alias`
+`cd songs/<...>`
+`convert_all`

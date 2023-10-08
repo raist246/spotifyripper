@@ -1,14 +1,13 @@
 #!/bin/bash
 
-string=$(echo "$1" | cut -d: -f3)
+# echo out track number
+string=$(echo "$1" | cut -d/ -f 5)
+echo $string
 string="http://open.spotify.com/track/$string"
 wget -q -O tmp.html "$string"
 
-# Echo out track number
-grep open.spotify.com/track tmp.html | cut -d\" -f4 | \
-  awk "{if (\$0 == \"$string\") {print NR}}"
-
-string=$(grep background: tmp.html | cut '-d/' -f 3,4,5 | cut '-d)' -f1)
+# download cover image
+string=$(grep -oE --color "background:[^>]+><[^>]+><[^>]+src=[^>]+>" tmp.html | grep -oE 'src="[^"]+*"' | cut -d\" -f2)
 wget -q -O cover.jpg "$string"
 
-rm -f tmp.html
+rm -f tmp.htm

@@ -25,7 +25,7 @@ if [[ -z $(pactl list short | grep spotify.monitor) ]]; then
 fi
 
 # Move Spotify sound output back to default at exit
-pasink=$(pactl stat | grep Sink | cut -d: -f2)
+pasink=$(pactl get-default-sink) 
 trap 'pactl move-sink-input $spotify $pasink' EXIT
 
 # Move Spotify to its own sink so recorded output will not get corrupted
@@ -75,7 +75,8 @@ do
       echo "Album = $string"
     elif [[ $variant == "url" ]]; then
       # Get the track number and download the coverart using an outside script
-      tracknumber=$(`$script_dir/trackify.sh` "$string")
+      echo "string: $string, in dir: $script_dir"
+      tracknumber=$($script_dir/trackify.sh "$string")
       echo "Track number = $tracknumber"
     fi
   fi
